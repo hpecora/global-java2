@@ -21,6 +21,10 @@ spring:
     openai:
       enabled: false   # <---- ISSO DESLIGA O SPRING AI COMPLETO
 
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+
 
 springdoc:
   api-docs.path: /api/v1/docs
