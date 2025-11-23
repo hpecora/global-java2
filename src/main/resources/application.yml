@@ -6,11 +6,11 @@ spring:
     url: jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL
     driver-class-name: oracle.jdbc.OracleDriver
     username: RM556612
-    password: 100505   # coloque aqui a mesma senha que você usa no SQL Developer
+    password: 100505
 
   jpa:
     hibernate:
-      ddl-auto: update           # deixa o Hibernate criar/atualizar as tabelas
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
