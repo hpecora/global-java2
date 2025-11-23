@@ -8,6 +8,10 @@ spring:
     username: RM556612
     password: 100505
 
+    ai:
+      openai:
+        api-key: dummy-key-123
+
   jpa:
     hibernate:
       ddl-auto: update
