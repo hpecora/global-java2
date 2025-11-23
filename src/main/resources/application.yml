@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: RM556612
+    password: 100505   # coloque aqui a mesma senha que você usa no SQL Developer
+
+  jpa:
+    hibernate:
+      ddl-auto: update           # deixa o Hibernate criar/atualizar as tabelas
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.OracleDialect
+
+springdoc:
+  api-docs.path: /api/v1/docs
+  swagger-ui.path: /api/v1/swagger
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+
+
