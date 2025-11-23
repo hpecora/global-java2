@@ -1,19 +1,15 @@
 package com.flextime.messaging;
 
-import com.flextime.config.RabbitMQConfig;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class CheckinProducer {
 
-    private final RabbitTemplate rabbitTemplate;
-
-    public CheckinProducer(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
-    }
-
-    public void sendCheckinMessage(String message) {
-        rabbitTemplate.convertAndSend(RabbitMQConfig.CHECKIN_QUEUE, message);
+    // Método chamado pelo serviço de check-in.
+    // Agora ele só loga e não usa RabbitMQ.
+    public void enviarMensagemCheckin(Long checkinId) {
+        log.info("Check-in {} registrado (RabbitMQ desativado nesta implantação).", checkinId);
     }
 }
