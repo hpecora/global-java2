@@ -7,7 +7,6 @@ import com.flextime.domain.model.Checkin;
 import com.flextime.domain.model.User;
 import com.flextime.domain.repository.CheckinRepository;
 import com.flextime.domain.repository.UserRepository;
-import com.flextime.messaging.CheckinProducer;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +18,13 @@ public class CheckinService {
 
     private final CheckinRepository checkinRepository;
     private final UserRepository userRepository;
-    private final CheckinProducer checkinProducer;
 
     public CheckinService(CheckinRepository checkinRepository,
-                          UserRepository userRepository,
-                          CheckinProducer checkinProducer) {
+                          UserRepository userRepository
+                          ) {
         this.checkinRepository = checkinRepository;
         this.userRepository = userRepository;
-        this.checkinProducer = checkinProducer;
+
     }
 
     @Transactional
@@ -41,12 +39,6 @@ public class CheckinService {
         checkin.setLocationType(dto.getLocationType());
         checkin.setMood(dto.getMood());
 
-        // Evita erro se RabbitMQ estiver desligado
-        try {
-            checkinProducer.sendCheckinMessage("Check-in criado para o usuário ID=" + user.getId());
-        } catch (Exception e) {
-            System.err.println("Falha ao enviar mensagem para RabbitMQ: " + e.getMessage());
-        }
 
         Checkin saved = checkinRepository.save(checkin);
 
