@@ -10,7 +10,9 @@ spring:
 
     ai:
       openai:
-        api-key: dummy-key-123
+        api-key: dummy-key
+      chat:
+        api-key: dummy-key
 
   jpa:
     hibernate:
