@@ -6,7 +6,9 @@ import com.flextime.domain.model.AnaliseProdutividade;
 import com.flextime.domain.model.Checkin;
 import com.flextime.domain.repository.AnaliseProdutividadeRepository;
 import com.flextime.domain.repository.CheckinRepository;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +20,13 @@ public class AnaliseProdutividadeService {
 
     private final CheckinRepository checkinRepository;
     private final AnaliseProdutividadeRepository analiseRepository;
-    private final IaRecomendacaoService iaRecomendacaoService;
 
     public AnaliseProdutividadeService(
             CheckinRepository checkinRepository,
-            AnaliseProdutividadeRepository analiseRepository,
-            IaRecomendacaoService iaRecomendacaoService
+            AnaliseProdutividadeRepository analiseRepository
     ) {
         this.checkinRepository = checkinRepository;
         this.analiseRepository = analiseRepository;
-        this.iaRecomendacaoService = iaRecomendacaoService;
     }
 
     @Transactional
@@ -49,20 +48,14 @@ public class AnaliseProdutividadeService {
 
         int scoreEquilibrio = calcularScore(mediaHumor);
 
-        String resumo = iaRecomendacaoService.gerarRecomendacao(
-                request.getUserId(),
-                request.getPeriodoInicio(),
-                request.getPeriodoFim(),
-                mediaHumor,
-                scoreEquilibrio
-        );
-
         AnaliseProdutividade analise = new AnaliseProdutividade();
         analise.setUserId(request.getUserId());
         analise.setPeriodoInicio(request.getPeriodoInicio());
         analise.setPeriodoFim(request.getPeriodoFim());
         analise.setScoreEquilibrio(scoreEquilibrio);
-        analise.setResumoTexto(resumo);
+
+        // Se quiser, pode atribuir um texto padrão aqui:
+        // analise.setResumoTexto("Funcionalidade de IA desativada. Análise baseada apenas nos dados de humor.");
 
         analise = analiseRepository.save(analise);
 
