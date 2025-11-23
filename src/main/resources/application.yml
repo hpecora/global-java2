@@ -8,12 +8,6 @@ spring:
     username: RM556612
     password: 100505
 
-    ai:
-      openai:
-        api-key: dummy-key
-      chat:
-        api-key: dummy-key
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,6 +16,11 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.OracleDialect
+
+  ai:
+    openai:
+      enabled: false   # <---- ISSO DESLIGA O SPRING AI COMPLETO
+
 
 springdoc:
   api-docs.path: /api/v1/docs
@@ -32,6 +31,3 @@ management:
     web:
       exposure:
         include: health,info
-
-
-
